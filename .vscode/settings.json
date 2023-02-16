@@ -1,0 +1,28 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsc.autoDetect": "off",
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/*electron-builder.json5",
+        "/*electron-builder.json"
+      ],
+      "url": "https://json.schemastore.org/electron-builder"
+    }
+  ],
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": "${workspaceFolder:animecenter-pc}/backend/database/main.db",
+      "name": "carlos"
+    },
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "sqlite",
+      "database": "${workspaceFolder:animecenter-pc}/backend/database/main.sqlite"
+    }
+  ],
+  "sqltools.useNodeRuntime": true
+}
