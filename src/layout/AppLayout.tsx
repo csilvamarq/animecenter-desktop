@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { Layout, Menu, theme, Avatar, Dropdown, Space } from "antd";
-import { UserOutlined, SearchOutlined, CalendarOutlined } from '@ant-design/icons';
+import { UserOutlined, SearchOutlined, CalendarOutlined,PlayCircleOutlined } from '@ant-design/icons';
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import type { MenuProps } from 'antd';
 import AppContext from "@/context/context";
 const { Header, Content, Footer, Sider } = Layout;
 const AppLayout: React.FC = () => {
-  const { selected, setSelected,setLogin } = useContext(AppContext)
+  const { selected, setSelected,setLogin,login } = useContext(AppContext)
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -46,13 +46,13 @@ const AppLayout: React.FC = () => {
           console.log(collapsed, type);
         }}
       >
-        <h2 style={{ textAlign: "center" }}>App</h2>
+        <h2 style={{ textAlign: "center",color : "white" }}>AnimeCenter2</h2>
         <Menu
           theme="dark"
           selectedKeys={selected}
           onClick={handleRoutes}
           mode="inline"
-          items={[{ name: "Usuario", icon: UserOutlined }, { name: "Anime", icon: CalendarOutlined }, { name: "Temporada", icon: CalendarOutlined }, { name: "Buscar", icon: SearchOutlined }].map(
+          items={[{ name: "Inicio", icon: UserOutlined }, { name: "Anime", icon: PlayCircleOutlined }, { name: "Temporada", icon: CalendarOutlined }, { name: "Buscar", icon: SearchOutlined }].map(
             (item, index) => ({
               key: String(index + 1),
               icon: React.createElement(item.icon),
@@ -63,12 +63,13 @@ const AppLayout: React.FC = () => {
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer, paddingLeft: "5%" }} >
-          <div style={{width : "90%",float : "left"}}></div>
-          <div style={{width : "10%",float : "right"}}>
+          <div style={{width : "80%",float : "left"}}></div>
+          <div style={{width : "20%",height : "90%",gap : "3%",float : "right",paddingRight : "1%",display : "flex",justifyContent : "end",alignItems : "center"}}>
+            <h3>{login}</h3>
           <Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
             <a onClick={(e) => e.preventDefault()}>
               <Space >
-                <Avatar size={54} icon={<UserOutlined />} />
+                <Avatar size={44} icon={<UserOutlined />} />
               </Space>
             </a>
           </Dropdown></div>

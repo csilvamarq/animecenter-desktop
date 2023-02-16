@@ -28,7 +28,9 @@ const App: React.FC = () => {
     }
   })
   useEffect(() => {
-    ipcRenderer.send("api")
+    if (localStorage.getItem("login")) {
+      setLogin(localStorage.getItem("login")!)
+    }
   }, [])
   return (
     <QueryClientProvider client={queryClient}>

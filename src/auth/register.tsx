@@ -7,9 +7,10 @@ import {
     Input,
     Select,
 } from 'antd';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AppContext from '@/context/context';
 
 const { Option } = Select;
 
@@ -45,26 +46,19 @@ const tailFormItemLayout = {
 
 const Register: React.FC = () => {
     const [form] = Form.useForm();
-
+    const {setLogin} = useContext(AppContext)
+    const navigate = useNavigate()
     const onFinish = (values: any) => {
-        axios.post("http://localhost:3002/login",{name : values.usuario,password : values.contraseña}).then(({data} : {data : any}) => console.log(data))
+        axios.post(`${import.meta.env.VITE_API_URL}/create`,{name : values.usuario,password : values.contraseña,email : values.email}).then(({data} : {data : any}) =>{ if (data.message === "success") {
+            setLogin(values.usuario)
+            navigate("/")
+        } else {
+            console.log("failed")
+        } })
     };
 
 
     const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
-
-    const onWebsiteChange = (value: string) => {
-        if (!value) {
-            setAutoCompleteResult([]);
-        } else {
-            setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-        }
-    };
-
-    const websiteOptions = autoCompleteResult.map((website) => ({
-        label: website,
-        value: website,
-    }));
 
     return (
         <div className="login-form">

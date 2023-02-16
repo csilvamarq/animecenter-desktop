@@ -9,7 +9,7 @@ import AppContext from '@/context/context';
 const Login = () => {
  const {setLogin} = useContext(AppContext)
   const onFinish = (values: any) => {
-    axios.post("http://localhost:3002/login",{name : values.usuario,password : values.contraseña}).then(({data} : {data : any}) =>{
+    axios.post(`${import.meta.env.VITE_API_URL}/login`,{name : values.usuario,password : values.contraseña}).then(({data} : {data : any}) =>{
       console.log(data)
        if (data.data.length>0) { 
         if (values.recordar) {
