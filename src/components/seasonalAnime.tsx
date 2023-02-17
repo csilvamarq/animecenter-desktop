@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, useContext } from "react";
-import { Row, theme, Col, Image } from "antd";
+import { Row, theme, Col, Image, Card } from "antd";
 import { SeasonalAnimeType } from "@/types/SeasonalAnimeType";
 import { useQuery } from "react-query";
 import axios from 'axios'
@@ -9,7 +9,7 @@ import AppContext from "@/context/context";
 
 const SeasonalAnime: React.FC = () => {
     const navigation = useNavigate()
-    const {setSelected} = useContext(AppContext)
+    const { setSelected } = useContext(AppContext)
     const {
         token: { colorBgContainer },
     } = theme.useToken();
@@ -23,20 +23,21 @@ const SeasonalAnime: React.FC = () => {
         <>
             {seasonalAnime.length > 1 ?
                 <div style={{ padding: 24, height: "100%", textAlign: "center", color: "black", background: colorBgContainer, overflowY: "auto" }}>
+                    <h1 style={{ fontSize: "30px" }}>Episodios Recientes</h1>
                     <Row>
                         {seasonalAnime?.map((item: SeasonalAnimeType, index: number) => {
-                            return (<Col style={{ padding: "2%",marginTop: "15%" }} key={index} span={8}>
-                                <h2>{<ShowMoreText lines={3}
-                                    more="Leer mas" expanded={false}>
+                            return (<Col style={{ padding: "2%" }} key={index} span={8}>
+                                <Card hoverable style={{ cursor: "pointer" }}><h2>{<ShowMoreText lines={3}
+                                    more="Leer mas" less="Leer menos" expanded={false}>
                                     <p>{item.name}</p>
                                 </ShowMoreText>}</h2>
-                                <img src={item.image} onClick={() =>{  navigation("/anime",{state : {name : item.name,url : item.url,image : item.image,episode : item.episode}});setSelected!(["2"])}} width="100%" height="80%" />
-                                <p >Episodio {item.episode}</p>
+                                    <img src={item.image} onClick={() => { navigation("/anime", { state: { name: item.name, url: item.url, image: item.image, episode: item.episode } }); setSelected!(["2"]) }} width="100%" height="100%" />
+                                    <p >Episodio {item.episode}</p></Card>
                             </Col>)
                         })}
                     </Row>
                 </div>
-                : <div style={{ textAlign: "center", }}><img src="/loader.gif" /></div>}
+                : <div style={{ textAlign: "center",cursor : "wait" }}><img src="/loader.gif" /></div>}
         </>
     )
 }

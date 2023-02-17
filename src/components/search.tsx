@@ -1,12 +1,11 @@
 import AppContext from "@/context/context";
-import useLazyQuery from "@/hooks/useLazyQuery";
 import SearchType from "@/types/SearchType";
-import { Col, Image, Row } from "antd";
+import { Card, Col, Image, Row } from "antd";
 import Search from "antd/es/input/Search";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import ShowMoreText from "react-show-more-text";
 
 const SearchAnime : React.FC = () => {
     const {setSelected} = useContext(AppContext)
@@ -33,15 +32,19 @@ return (<>
   <Row style={{textAlign : "center",width : "100%", height : "100%", overflowY : "auto"}}>
     {searchData?.map((item,index) =>{
         return (
-            <Col span={8} style={{ padding: "2%",marginTop: "15%" }}>
-                <h1>{item.name}</h1>
+            <Col span={8} style={{ padding: "2%" }}>
+                <Card hoverable style={{ cursor: "pointer" }}><h1><ShowMoreText lines={3}
+                                    more="Leer mas" less="Leer menos" expanded={false}>
+                                    <p>{item.name}</p>
+                                </ShowMoreText></h1>
                 <Image preview={false} onClick={() => {  navigate("/anime",{state : {name : item.name,enlace : item.url,image : item.imagen}});setSelected!(["2"])}} src={item.imagen} width="100%" height="90%" />
+                </Card>
             </Col>
         )
     })}
   </Row>
   </>
-  ) : loading && <div style={{ textAlign: "center" }}><img src="/loader.gif" /></div>}
+  ) : loading && <div style={{ textAlign: "center",cursor : "wait" }}><img src="/loader.gif" /></div>}
   </>
 
 )

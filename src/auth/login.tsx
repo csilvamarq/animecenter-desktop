@@ -7,14 +7,18 @@ import axios from 'axios';
 import AppContext from '@/context/context';
 
 const Login = () => {
- const {setLogin} = useContext(AppContext)
+ const {setLogin,setPassword,setImagen} = useContext(AppContext)
   const onFinish = (values: any) => {
     axios.post(`${import.meta.env.VITE_API_URL}/login`,{name : values.usuario,password : values.contraseña}).then(({data} : {data : any}) =>{
-      console.log(data)
        if (data.data.length>0) { 
         if (values.recordar) {
+          console.log(data.data[0])
           localStorage.setItem("login",data.data[0].name)
+          localStorage.setItem("password",data.data[0].password)
+          localStorage.setItem("imagen",data.data[0].avatar)
         }
+        setImagen(data.data[0].avatar)
+        setPassword(data.data[0].password)
         setLogin(data.data[0].name)}}).catch(error => console.error(error))
 };
   return (

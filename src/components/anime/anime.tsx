@@ -1,4 +1,4 @@
-import { Image, Rate,Row,Col } from "antd";
+import { Image, Rate,Row,Col, Card } from "antd";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -40,6 +40,7 @@ const Anime: React.FC = () => {
                         <Rate onChange={setValue} value={value} />
                         {value ? <span style={{color : "#E1AD01",fontSize : 20,paddingLeft : "10px"}}>{value}</span> : ''}
                     </span>
+
                     </Col>
                     <Col span={12}>
                     <h1>Estado</h1>
@@ -53,8 +54,10 @@ const Anime: React.FC = () => {
                         {anime.episodes?.map((item,index) => {
                             return (
                                 <Col  onClick={() => navigate("/ver", {state : {name : state.name,anime : item.enlace,episode : index+1}})} key={index} span={12} style={{ padding: "2%",marginTop: "15%" }}>
+                                     <Card hoverable style={{ cursor: "pointer" }}> 
                                     <h3>Episodio {index+1} </h3>
                                 <Image preview={false}  width={"100%"} height={"100%"} src={item.imagen}/>
+                                </Card>
                                 </Col>
                             )
                         })}
@@ -62,7 +65,7 @@ const Anime: React.FC = () => {
 
                 </div>
             ) : <div style={{ display: "flex",
-                justifyContent: "center",alignItems: "center",textAlign: "center" }}><img src="/loader.gif" /></div>
+                justifyContent: "center",alignItems: "center",textAlign: "center",cursor : "wait" }}><img src="/loader.gif" /></div>
             }
         </>
     )
