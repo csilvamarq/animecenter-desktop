@@ -1,109 +1,220 @@
 import AppContext from "@/context/context";
 import SearchType from "@/types/SearchType";
-import { Button, Col, Empty, Modal, Row, Form, Input, Card, Image, Select } from "antd";
-import {DeleteOutlined} from '@ant-design/icons';
+import {
+  Button,
+  Col,
+  Empty,
+  Modal,
+  Row,
+  Form,
+  Input,
+  Card,
+  Image,
+  Select,
+} from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowMoreText from "react-show-more-text";
 
-
 const ListaAnime: React.FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate()
-    const [form] = Form.useForm();
-    const { setSelected } = useContext(AppContext)
-    const [searchLoad, setSearchLoad] = useState<boolean>(false)
-    const [search, setSearch] = useState<any[]>([])
-    const [animes, setAnimes] = useState<any[]>([])
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hover, setHover] = useState(false);
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const { setSelected } = useContext(AppContext);
+  const [searchLoad, setSearchLoad] = useState<boolean>(false);
+  const [search, setSearch] = useState<any[]>([]);
+  const [animes, setAnimes] = useState<any[]>([]);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
-    const handleOk = (values: any) => {
-        console.log(values)
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-        setAnimes([])
-        setSearch([])
-    };
-    const handleClear = () => {
-        setSearch([])
+  const handleOk = (values: any) => {
+    console.log(values);
+    if (lista) {
+      const list = JSON.parse(lista);
+      list.push({
+        name: values.nombre,
+        descripcion: values.descripcion,
+        animes: animes,
+      });
+      localStorage.setItem("listas", JSON.stringify(lista));
+      setAnimes([]);
+    } else {
+      const arr = [];
+      arr.push({
+        name: values.nombre,
+        descripcion: values.descripcion,
+        animes: animes,
+      });
+      localStorage.setItem("listas", JSON.stringify(arr));
+      setAnimes([]);
     }
-    const onChange = (value : any) => {
-        console.log(animes)
-         const filtered = search.filter(item => item.label === value.label)[0]
-         console.log(filtered)
-        setAnimes(current => [...current,{imagen : filtered.imagen,url : filtered.value,name : value.label}])
-    };
-    const onSelect = (value: any) => {
-        setSearchLoad(true)
-        if (value.keyCode === 13) {
-            axios.get(`${import.meta.env.VITE_API_URL}/search/${value.target.value}`).then(({ data }: { data: SearchType[] }) => {
-                let arr: any[] = []
-                data.map((item => arr.push({ value: item.url, label: item.name,imagen : item.imagen })))
-                setSearch(arr)
-                setSearchLoad(false)
-            })
-        }
-    }
-    const lista = localStorage.getItem("listas")
-    return (
-        <Row>
-            <Col style={{ padding: "3%" }}>
-                <h1 style={{ fontSize: "25px" }}>Mis listas</h1>
-                {lista ? <p>tienes</p> : <div>
-                    <Empty description={
-                        <span>aun no tienes ninguna lista</span>
+    setIsModalOpen(false);
+  };
 
-                    }>  <Button onClick={showModal}>Nueva Lista</Button></Empty>
-                    <Modal width={"50%"}  title="Nueva Lista" okText="Crear Lista" cancelText="Cancelar" open={isModalOpen} onOk={form.submit} onCancel={handleCancel}>
-                        <Form form={form} onFinish={handleOk} >
-                            <Form.Item label="Nombre" name="nombre">
-                                <Input required placeholder="nombre" />
-                            </Form.Item>
-                            <Form.Item label="Descripción" name="descripción">
-                                <Input required placeholder="nombre" />
-                            </Form.Item>
-                            <Form.Item label="Animes" name="Animes">
-                                <Select
-                                allowClear
-                                    showSearch
-                                    labelInValue
-                                    loading={searchLoad}
-                                    onClear={handleClear}
-                                    onSelect={onChange}
-                                    onKeyDown={onSelect}
-                                    options={(search || []).map((d) => ({
-                                        imagen : d.imagen,
-                                        value: d.value,
-                                        label: d.label,
-                                    }))}
-                         />
-                            </Form.Item>
-                        </Form>
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setAnimes([]);
+    setSearch([]);
+  };
+  const handleClear = () => {
+    setSearch([]);
+  };
+  const onChange = (value: any) => {
+    const filtered = search.filter((item) => item.label === value.label)[0];
+    console.log(filtered);
+    if (animes.find((item) => item.name === value.label) === undefined) {
+      setAnimes((current) => [
+        ...current,
+        { imagen: filtered.imagen, url: filtered.value, name: value.label },
+      ]);
+    }
+  };
+  const onSelect = (value: any) => {
+    setSearchLoad(true);
+    if (value.keyCode === 13) {
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/search/${value.target.value}`)
+        .then(({ data }: { data: SearchType[] }) => {
+          let arr: any[] = [];
+          data.map((item) =>
+            arr.push({ value: item.url, label: item.name, imagen: item.imagen })
+          );
+          setSearch(arr);
+          setSearchLoad(false);
+        });
+    }
+  };
+  const lista = localStorage.getItem("listas");
+  return (
+    <Row>
+      <Col style={{ padding: "3%" }}>
+        <h1 style={{ fontSize: "25px" }}>Mis listas</h1>
+        {lista ? (
+          <Row>
+            {JSON.parse(lista).map((item: any) => {
+              return <Col>
+              <h1>{item.name}</h1>
+              </Col>
+            })}
+          </Row>
+        ) : (
+          <div>
+            <Empty description={<span>aun no tienes ninguna lista</span>}>
+              {" "}
+              <Button onClick={showModal}>Nueva Lista</Button>
+            </Empty>
+            <Modal
+              width={"50%"}
+              title="Nueva Lista"
+              okText="Crear Lista"
+              cancelText="Cancelar"
+              open={isModalOpen}
+              onOk={form.submit}
+              onCancel={handleCancel}
+            >
+              <Form form={form} onFinish={handleOk}>
+                <Form.Item label="Nombre" name="nombre">
+                  <Input required placeholder="nombre" />
+                </Form.Item>
+                <Form.Item label="Descripción" name="descripción">
+                  <Input required placeholder="nombre" />
+                </Form.Item>
+                <Form.Item label="Animes" name="Animes">
+                  <Select
+                    allowClear
+                    showSearch
+                    labelInValue
+                    loading={searchLoad}
+                    onClear={handleClear}
+                    onSelect={onChange}
+                    onKeyDown={onSelect}
+                    options={(search || []).map((d) => ({
+                      imagen: d.imagen,
+                      value: d.value,
+                      label: d.label,
+                    }))}
+                  />
+                </Form.Item>
+              </Form>
+              <Row>
+                {animes.map((item) => {
+                  return (
+                    <Col span={8} style={{ padding: "2%" }}>
+                      <Card
+                        hoverable
+                        style={{ cursor: "pointer", display: "inline-block" }}
+                      >
                         <Row>
-                            {animes.map((item) => {
-                                return (
-                                    <Col span={8} style={{ padding: "2%" }}>
-                                        <Card  hoverable style={{ cursor: "pointer",display: "inline-block" }}><p><ShowMoreText lines={3}
-                                            more="Leer mas" less="Leer menos" expanded={false}>
-                                            <p>{item.name}</p>
-                                        </ShowMoreText></p>
-                                            <Image preview={false} onClick={() => { navigate("/anime", { state: { name: item.name, enlace: item.url, image: item.imagen } }); setSelected!(["2"]) }} src={item.imagen} width="100%" height="90%" />
-                                        </Card>
-                                    </Col>
-                                )
-                            })}
+                          <Col span={22}>
+                            <p>
+                              <ShowMoreText
+                                lines={3}
+                                more="Leer mas"
+                                less="Leer menos"
+                                expanded={false}
+                              >
+                                <p>{item.name}</p>
+                              </ShowMoreText>
+                            </p>
+                          </Col>
+                          <Col
+                            style={{
+                              flex: 1,
+                              display: "flex",
+                              flexWrap: "wrap",
+                              justifyContent: "center",
+                              alignSelf: "flex-end",
+                              height: "30px",
+                            }}
+                            span={2}
+                          >
+                            <DeleteOutlined
+                              onMouseOver={() => setHover(true)}
+                              onMouseLeave={() => setHover(false)}
+                              style={{ color: hover ? "red" : "black" }}
+                              onClick={() => {
+                                setHover(false);
+                                setAnimes(
+                                  animes.filter(
+                                    (anime) => anime.name !== item.name
+                                  )
+                                );
+                              }}
+                              size={40}
+                            />
+                          </Col>
                         </Row>
-                    </Modal>
-                </div>}
-            </Col>
-        </Row>
-    )
-}
+                        <Image
+                          preview={false}
+                          onClick={() => {
+                            navigate("/anime", {
+                              state: {
+                                name: item.name,
+                                enlace: item.url,
+                                image: item.imagen,
+                              },
+                            });
+                            setSelected!(["2"]);
+                          }}
+                          src={item.imagen}
+                          width="100%"
+                          height="90%"
+                        />
+                      </Card>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Modal>
+          </div>
+        )}
+      </Col>
+    </Row>
+  );
+};
 
-export default ListaAnime
+export default ListaAnime;
