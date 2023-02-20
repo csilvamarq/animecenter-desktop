@@ -1,4 +1,4 @@
-import { Image, Rate,Row,Col, Card } from "antd";
+import { Image, Rate,Row,Col, Card, Pagination } from "antd";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,9 +9,11 @@ import ShowMoreText from "react-show-more-text";
 const Anime: React.FC = () => {
     const { state } = useLocation()
     const navigate = useNavigate()
+    const [currentPage,setCurrentPage] = useState<number>(1)
+    const [minIndex,setMinIndex] = useState<number>(0)
+    const [maxIndex,setMaxIndex] = useState<number>(30)
     const [value, setValue] = useState<number | undefined>(3);
     const [anime, setAnime] = useState<AnimeType>({ info: {}, episodes: [] })
-    console.log(state?.enlace)
     const lastIndex = state.url ? state.url.indexOf(`/${state.episode}`) : state.enlace.lastIndexOf(`-sub`)
     useQuery({
         queryKey: ['Anime'], queryFn: async () => {
@@ -21,6 +23,12 @@ const Anime: React.FC = () => {
             })
         }
     })
+
+    const handleChange = (page : any) => {
+        setCurrentPage(page)
+        setMinIndex((page - 1) * 30)
+        setMaxIndex(page * 30)
+    }
     return (
         <>
             {anime.episodes?.length! > 1 ? (
@@ -52,7 +60,8 @@ const Anime: React.FC = () => {
                     <h1>Episodios</h1>
                     <Row>
                         {anime.episodes?.map((item,index) => {
-                            return (
+                             return index >= minIndex &&
+                             index < maxIndex &&  (
                                 <Col  onClick={() => navigate("/ver", {state : {name : state.name,anime : item.enlace,episode : index+1}})} key={index} span={12} style={{ padding: "2%",marginTop: "15%" }}>
                                      <Card hoverable style={{ cursor: "pointer" }}> 
                                     <h3>Episodio {index+1} </h3>
@@ -62,6 +71,10 @@ const Anime: React.FC = () => {
                             )
                         })}
                     </Row>
+                    <Pagination pageSize={30}
+                    current={1}
+                    total={anime.episodes?.length}
+                    onChange={handleChange} />
 
                 </div>
             ) : <div style={{ display: "flex",

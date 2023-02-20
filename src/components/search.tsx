@@ -32,13 +32,12 @@ return (<>
   <Row style={{textAlign : "center",width : "100%", height : "100%", overflowY : "auto"}}>
     {searchData?.map((item,index) =>{
         return (
-            <Col span={8} style={{ padding: "2%" }}>
-                <Card hoverable style={{ cursor: "pointer" }}><h1><ShowMoreText lines={3}
+            <Col span={8} style={{display : "flex",flexDirection : "column", padding: "2%"}}>
+                <h1><ShowMoreText lines={3}
                                     more="Leer mas" less="Leer menos" expanded={false}>
                                     <p>{item.name}</p>
                                 </ShowMoreText></h1>
-                <Image preview={false} onClick={() => {  navigate("/anime",{state : {name : item.name,enlace : item.url,image : item.imagen}});setSelected!(["2"])}} src={item.imagen} width="100%" height="90%" />
-                </Card>
+                <Image style={{ cursor: "pointer" }} preview={false} onClick={() => {  navigate("/anime",{state : {name : item.name,enlace : item.url,image : item.imagen}});setSelected!(["2"])}} src={item.imagen} width="100%" height="100%" />
             </Col>
         )
     })}
