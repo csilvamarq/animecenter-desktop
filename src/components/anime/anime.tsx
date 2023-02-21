@@ -15,7 +15,7 @@ const Anime: React.FC = () => {
     const [value, setValue] = useState<number | undefined>(3);
     const [anime, setAnime] = useState<AnimeType>({ info: {}, episodes: [] })
     const lastIndex = state.url ? state.url.indexOf(`/${state.episode}`) : state.enlace.lastIndexOf(`-sub`)
-    useQuery({
+    const {refetch} = useQuery({
         queryKey: ['Anime'], queryFn: async () => {
             return axios.get(`${import.meta.env.VITE_API_URL}/episodes/${state?.enlace ? state.enlace.substring(31,lastIndex) : state.url.substring(20, lastIndex)}`).then(({ data }: { data: AnimeType }) => {
                 setValue(data.info.score)
@@ -62,7 +62,7 @@ const Anime: React.FC = () => {
                         {anime.episodes?.map((item,index) => {
                              return index >= minIndex &&
                              index < maxIndex &&  (
-                                <Col  onClick={() => navigate("/ver", {state : {name : state.name,anime : item.enlace,episode : index+1}})} key={index} span={12} style={{ padding: "2%",marginTop: "15%" }}>
+                                <Col  onClick={() => navigate("/ver", {state : {name : state.name,anime : item.enlace,episode : index+1}})} key={index} span={12} style={{ padding: "1%" }}>
                                      <Card hoverable style={{ cursor: "pointer" }}> 
                                     <h3>Episodio {index+1} </h3>
                                 <Image preview={false}  width={"100%"} height={"100%"} src={item.imagen}/>
@@ -71,8 +71,8 @@ const Anime: React.FC = () => {
                             )
                         })}
                     </Row>
-                    <Pagination pageSize={30}
-                    current={1}
+                    <Pagination pageSize={maxIndex}
+                    current={currentPage}
                     total={anime.episodes?.length}
                     onChange={handleChange} />
 

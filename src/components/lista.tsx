@@ -88,7 +88,9 @@ const ListaAnime: React.FC = () => {
                 });
         }
     };
-    console.log(lista)
+    useEffect(() => {
+        setLista(lista ? JSON.parse(lista).length === 0 ? null : lista : null )
+    },[])
     return (
         <div style={{ overflow: "auto", height: "100%" }}>
             <h1 style={{ fontSize: "25px" }}>Mis listas  {lista ? <Button onClick={showModal}>Nueva Lista</Button> : ""}</h1>
