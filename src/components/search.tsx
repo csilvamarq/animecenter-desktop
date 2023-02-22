@@ -33,7 +33,7 @@ return (<>
     {searchData?.map((item,index) =>{
         return (
             <Col span={8} style={{display : "flex",flexDirection : "column", padding: "2%"}}>
-                <h1><ShowMoreText lines={3}
+                <h1><ShowMoreText  width={200} lines={3}
                                     more="Leer mas" less="Leer menos" expanded={false}>
                                     <p>{item.name}</p>
                                 </ShowMoreText></h1>

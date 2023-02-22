@@ -19,7 +19,7 @@ const Settings: React.FC = () => {
     };
     return (
         <Row>
-            <Col><h1>Cambia tu avatar</h1>
+            <Col span={24}><h1>Cambia tu avatar</h1>
                 <ImageUploading
                     value={images}
                     onChange={onChange}
@@ -44,6 +44,8 @@ const Settings: React.FC = () => {
                     </div>
                     )}
                 </ImageUploading>
+            </Col>
+            <Col>
             </Col>
         </Row>
     )

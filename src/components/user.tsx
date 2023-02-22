@@ -14,12 +14,11 @@ const User : React.FC = () => {
             return axios.get(`${import.meta.env.VITE_API_URL}/lastAnimeNews`).then(({data}) => setAnimeNews(data))
         }
     })
-    console.log(animeNews)
 return (
     <Row style={{padding : "2%"}}>
         <Col>
         <Title>Bienvenido de nuevo {login}</Title>
-        {imagen==="" ? <Avatar shape="square" size={100}  icon={<UserOutlined />} /> : <Image preview={false} width={200} style={{objectFit : "contain"}} height={200} src={Buffer.from(imagen, 'base64').toString()} />} 
+        {imagen==="" || null ? <Avatar shape="square" size={100}  icon={<UserOutlined />} /> : <Image preview={false} width={200} style={{objectFit : "contain"}} height={200} src={Buffer.from(imagen, 'base64').toString()} />} 
         <Row>
         {animeNews.map((item) => {
             return (

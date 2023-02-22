@@ -17,6 +17,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowMoreText from "react-show-more-text";
+import { NotificationManager,NotificationContainer } from "react-notifications";
 
 const ListaAnime: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,6 +54,7 @@ const ListaAnime: React.FC = () => {
             localStorage.setItem("listas", JSON.stringify(arr));
             setAnimes([]);
         }
+        NotificationManager.success("Lista creada con exito")
         setIsModalOpen(false);
     };
 
@@ -64,6 +66,7 @@ const ListaAnime: React.FC = () => {
     const handleClear = () => {
         setSearch([]);
     };
+
     const onChange = (value: any) => {
         const filtered = search.filter((item) => item.label === value.label)[0];
         if (animes.find((item) => item.name === value.label) === undefined) {
@@ -89,11 +92,11 @@ const ListaAnime: React.FC = () => {
         }
     };
     useEffect(() => {
-        setLista(lista ? JSON.parse(lista).length === 0 ? null : lista : null )
-    },[])
+        setLista(lista ? JSON.parse(lista).length === 0 ? null : lista : null)
+    }, [])
     return (
         <div style={{ overflow: "auto", height: "100%" }}>
-            <h1 style={{ fontSize: "25px" }}>Mis listas  {lista ? <Button onClick={showModal}>Nueva Lista</Button> : ""}</h1>
+            <h1 style={{ fontSize: "5vw" }}>Mis listas  {lista ? <Button onClick={showModal}>Nueva Lista</Button> : ""}</h1>
             {lista ? (
                 <Row >
                     {JSON.parse(lista).map((item: any) => {
@@ -106,16 +109,22 @@ const ListaAnime: React.FC = () => {
                             <Row   >
                                 {item.animes.map((anime: any) => {
                                     return (
-                                        <Col style={{ display: "flex", flexDirection: "column", padding: "2%" }} span={24 / item.animes.length}>
-                                            <ShowMoreText
+                                        <Col style={{ display: "flex", flexDirection: "column", padding: "2%",width: "fit-content" }} span={24 / item.animes.length}>
+                                            <Row><Col span={16}><ShowMoreText
                                                 lines={2}
                                                 more="Leer mas"
                                                 less="Leer menos"
+                                                width={200}
                                                 expanded={false}
                                             >
                                                 <p>{anime.name}</p>
                                             </ShowMoreText>
-                                            <Image onClick={() => { navigate("/anime", { state: { name: anime.name, enlace: anime.url, image: anime.imagen } }); setSelected!(["2"]) }} preview={false} height={200} width={200} src={anime.imagen} />
+                                            </Col>
+                                            <Col span={8}>
+                                            <DeleteOutlined style={{cursor : "pointer"}} size={40} />
+                                            </Col>
+                                            </Row>
+                                            <Image onClick={() => { navigate("/anime", { state: { name: anime.name, enlace: anime.url, image: anime.imagen } }); setSelected!(["2"]) }} preview={false} height={"100%"} width={"70%"} src={anime.imagen} />
                                         </Col>
                                     )
                                 })}
@@ -234,6 +243,7 @@ const ListaAnime: React.FC = () => {
                     })}
                 </Row>
             </Modal>
+            <NotificationContainer />
         </div>
     );
 };

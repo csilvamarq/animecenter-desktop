@@ -76,7 +76,7 @@ const AppLayout: React.FC = () => {
             <Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
               <a onClick={(e) => e.preventDefault()}>
                 <Space >
-                 {imagen==="" ? <Avatar size={44}  icon={<UserOutlined />} /> : <Image style={{objectFit : "contain"}} preview={false} width={50} height={50} src={Buffer.from(imagen, 'base64').toString()} />} 
+                 {imagen==="" || null ? <Avatar size={44}  icon={<UserOutlined />} /> : <Image style={{objectFit : "contain"}} preview={false} width={50} height={50} src={Buffer.from(imagen, 'base64').toString()} />} 
                 </Space>
               </a>
             </Dropdown></div>
