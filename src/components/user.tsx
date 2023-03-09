@@ -9,15 +9,15 @@ const User : React.FC = () => {
 
     const {login,imagen,tema} = useContext(AppContext)
     const [animeNews,setAnimeNews] = useState<any[]>([])
-    useQuery({
-        queryKey: ['lastAnime'], queryFn: async () => {
-            return axios.get(`${import.meta.env.VITE_API_URL}/lastAnimeNews`).then(({data}) => setAnimeNews(data))
-        }
-    })
+    // useQuery({
+    //     queryKey: ['lastAnime'], queryFn: async () => {
+    //         return axios.get(`${import.meta.env.VITE_API_URL}/lastAnimeNews`).then(({data}) => setAnimeNews(data))
+    //     }
+    // })
 return (
-    <Row style={{padding : "2%",backgroundColor : tema === "light" ? "white" : "black"}}>
+    <Row style={{padding : "2%"}}>
         <Col>
-        <Title style={{color: tema === "light" ? "black" : "white"}}>Bienvenido de nuevo {login}</Title>
+        <Title style={{color : tema === "light" ? "black" : "white"}}>Bienvenido de nuevo {login}</Title>
         {imagen==="" || null ? <Avatar shape="square" size={100}  icon={<UserOutlined />} /> : <Image preview={false} width={200} style={{objectFit : "contain"}} height={200} src={Buffer.from(imagen, 'base64').toString()} />} 
         <Row>
         {animeNews.map((item) => {

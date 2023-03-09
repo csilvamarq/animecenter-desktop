@@ -30,7 +30,7 @@ return (<>
   {searchData!?.length>1 ? (
     <>
   <p>{searchData?.length} resultados encontrados</p>
-  <Row style={{textAlign : "center",width : "100%", height : "100%", overflowY : "auto",color : tema === "light" ? "black" : "white"}}>
+  <Row style={{textAlign : "center",width : "100%", height : "80%", overflowY : "auto",color : tema === "light" ? "black" : "white"}}>
     {searchData?.map((item,index) =>{
         return (
             <Col span={8} style={{display : "flex",flexDirection : "column", padding: "2%"}}>
