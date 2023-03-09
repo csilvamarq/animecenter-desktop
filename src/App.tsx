@@ -18,6 +18,7 @@ import ListaAnime from './components/lista';
 const App: React.FC = () => {
   const [selected, setSelected] = useState<string[]>(["1"])
   const [password,setPassword] = useState("")
+  const [tema,setTema] = useState("light")
   const [imagen,setImagen] = useState<string>("")
   const [login, setLogin] = useState<string>("")
   const queryClient = new QueryClient({
@@ -41,7 +42,7 @@ const App: React.FC = () => {
   }, [])
   return (
     <QueryClientProvider client={queryClient}>
-      <AppContext.Provider value={{ selected, setSelected, login, setLogin,setPassword,password,imagen,setImagen }}>
+      <AppContext.Provider value={{ selected, setSelected, login, setLogin,setPassword,password,imagen,setImagen,tema,setTema }}>
         <BrowserRouter>
           <Routes>
             {login !== "" || localStorage.getItem("login") ? (

@@ -25,7 +25,7 @@ const ListaAnime: React.FC = () => {
     const [hover, setHover] = useState(false);
     const navigate = useNavigate();
     const [form] = Form.useForm();
-    const { setSelected } = useContext(AppContext);
+    const { setSelected,tema } = useContext(AppContext);
     const [searchLoad, setSearchLoad] = useState<boolean>(false);
     const [search, setSearch] = useState<any[]>([]);
     const [animes, setAnimes] = useState<any[]>([]);
@@ -95,7 +95,7 @@ const ListaAnime: React.FC = () => {
         setLista(lista ? JSON.parse(lista).length === 0 ? null : lista : null)
     }, [])
     return (
-        <div style={{ overflow: "auto", height: "100%" }}>
+        <div style={{ overflow: "auto", height: "100%",color : tema === "light" ? "black" : "white" }}>
             <h1 style={{ fontSize: "5vw" }}>Mis listas  {lista ? <Button onClick={showModal}>Nueva Lista</Button> : ""}</h1>
             {lista ? (
                 <Row >
@@ -208,7 +208,7 @@ const ListaAnime: React.FC = () => {
                                             <DeleteOutlined
                                                 onMouseOver={() => setHover(true)}
                                                 onMouseLeave={() => setHover(false)}
-                                                style={{ color: hover ? "red" : "black" }}
+                                                style={{ color: hover ? "white" : "black" }}
                                                 onClick={() => {
                                                     setHover(false);
                                                     setAnimes(

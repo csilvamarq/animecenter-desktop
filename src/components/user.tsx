@@ -7,7 +7,7 @@ import axios from "axios";
 const { Title } = Typography;
 const User : React.FC = () => {
 
-    const {login,imagen} = useContext(AppContext)
+    const {login,imagen,tema} = useContext(AppContext)
     const [animeNews,setAnimeNews] = useState<any[]>([])
     useQuery({
         queryKey: ['lastAnime'], queryFn: async () => {
@@ -15,9 +15,9 @@ const User : React.FC = () => {
         }
     })
 return (
-    <Row style={{padding : "2%"}}>
+    <Row style={{padding : "2%",backgroundColor : tema === "light" ? "white" : "black"}}>
         <Col>
-        <Title>Bienvenido de nuevo {login}</Title>
+        <Title style={{color: tema === "light" ? "black" : "white"}}>Bienvenido de nuevo {login}</Title>
         {imagen==="" || null ? <Avatar shape="square" size={100}  icon={<UserOutlined />} /> : <Image preview={false} width={200} style={{objectFit : "contain"}} height={200} src={Buffer.from(imagen, 'base64').toString()} />} 
         <Row>
         {animeNews.map((item) => {

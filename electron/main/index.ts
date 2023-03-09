@@ -1,7 +1,7 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, Menu } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
-import {exec} from 'node:child_process'
+import { exec } from 'node:child_process'
 
 // The built directory structure
 //
@@ -43,11 +43,11 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
-    title: 'Main window',
+    title: 'Animecenter',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
     webPreferences: {
       preload,
-      webSecurity : false,
+      webSecurity: false,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
       // Consider using contextBridge.exposeInMainWorld
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
@@ -63,7 +63,27 @@ async function createWindow() {
   } else {
     win.loadFile(indexHtml)
   }
-
+  win.webContents.openDevTools()
+  let menu = Menu.buildFromTemplate([
+    {
+      label: "Listas",
+      submenu: [
+        { label: "" }
+      ]
+    },
+    {
+      label: "Ajustes",
+      submenu: [
+        { label: "Tema",submenu : [
+          {label : "Claro" ,click : () =>{console.log("light");win.webContents.send("light-mode")}},{label : "Oscuro",click : () => {console.log("dark");win.webContents.send("dark-mode")}}
+        ] }
+      ]
+    },
+    {
+      label: "Salir",
+    }
+  ])
+  Menu.setApplicationMenu(menu);
   // Test actively push message to the Electron-Renderer
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', new Date().toLocaleString())

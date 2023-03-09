@@ -9,7 +9,7 @@ import AppContext from "@/context/context";
 
 const SeasonalAnime: React.FC = () => {
     const navigation = useNavigate()
-    const { setSelected } = useContext(AppContext)
+    const { setSelected,tema } = useContext(AppContext)
     const {
         token: { colorBgContainer },
     } = theme.useToken();
@@ -22,11 +22,11 @@ const SeasonalAnime: React.FC = () => {
     return (
         <>
             {seasonalAnime.length > 1 ?
-                <div style={{ padding: 24, height: "100%", textAlign: "center", color: "black", background: colorBgContainer, overflowY: "auto" }}>
-                    <h1 style={{ fontSize: "30px" }}>Episodios Recientes</h1>
+                <div style={{ padding: 24, height: "100%", textAlign: "center", color: "black", backgroundColor: tema === "light" ? "white" : "black", overflowY: "auto" }}>
+                    <h1 style={{ fontSize: "30px",color : tema === "light" ? "black" : "white" }}>Episodios Recientes</h1>
                     <Row>
                         {seasonalAnime?.map((item: SeasonalAnimeType, index: number) => {
-                            return (<Col style={{ padding: "2%",display : "flex",flexDirection : "column" }} key={index} span={8}>
+                            return (<Col style={{ padding: "2%",display : "flex",flexDirection : "column",color : tema === "light" ? "black" : "white" }} key={index} span={8}>
                                 <h2>{<ShowMoreText lines={3}
                                     more="Leer mas" less="Leer menos" expanded={false}  width={200}>
                                     <p>{item.name}</p>

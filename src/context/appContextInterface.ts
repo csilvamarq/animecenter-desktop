@@ -9,6 +9,8 @@ password : string,
 setImagen :  React.Dispatch<React.SetStateAction<string>>
 imagen : string,
 setPassword :  React.Dispatch<React.SetStateAction<string>>
+,tema : string,
+setTema : React.Dispatch<React.SetStateAction<string>>
 }
 
 export default AppContextInterface

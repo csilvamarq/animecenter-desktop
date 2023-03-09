@@ -1,13 +1,15 @@
 import { Image, Rate, Row, Col, Card, Pagination, Button, Modal, Select } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
 import AnimeType from "@/types/AnimeType";
 import ShowMoreText from "react-show-more-text";
 import { NotificationManager, NotificationContainer } from 'react-notifications'
+import AppContext from "@/context/context";
 
 const Anime: React.FC = () => {
+    const {tema} = useContext(AppContext)
     const { state } = useLocation()
     const navigate = useNavigate()
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -40,7 +42,6 @@ const Anime: React.FC = () => {
         setIsModalOpen(false)
     }
     const handleSelect = (value: any) => {
-        console.log(value)
         const current = JSON.parse(localStorage.getItem("listas")!)
             current.map((item: any) => {
                 if (item.name === value && item.animes.find((anime : any) => anime.name === state.name) === undefined) {
@@ -56,7 +57,7 @@ const Anime: React.FC = () => {
     return (
         <>
             {anime.episodes?.length! > 1 ? (
-                <div style={{ overflowY: "auto", width: "100%", height: "100%", textAlign: "center" }}>
+                <div style={{ overflowY: "auto", width: "100%", height: "100%", textAlign: "center",color : tema === "light" ? "black" : "white" }}>
                     <h1>{state.name}</h1>
                     <Image src={state.image} width="100%" height="100%" style={{ objectFit: "contain" }} />
                     <h1>Descripción  </h1>
@@ -67,11 +68,11 @@ const Anime: React.FC = () => {
                     </ShowMoreText>
                     <p></p>
                     {localStorage.getItem("listas") && <Button onClick={handleModalOpen}>Añadir a la lista</Button>}
-                    <Row>
+                    <Row >
                         <Col span={12}>
                             <h1>Puntuacion</h1>
                             <span>
-                                <Rate onChange={setValue} value={value} />
+                                <Rate disabled  onChange={setValue} value={value} />
                                 {value ? <span style={{ color: "#E1AD01", fontSize: 20, paddingLeft: "10px" }}>{value}</span> : ''}
                             </span>
 
@@ -89,7 +90,7 @@ const Anime: React.FC = () => {
                             return index >= minIndex &&
                                 index < maxIndex && (
                                     <Col onClick={() => navigate("/ver", { state: { name: state.name, anime: item.enlace, episode: index + 1 } })} key={index} span={12} style={{ padding: "1%" }}>
-                                        <Card hoverable style={{ cursor: "pointer" }}>
+                                        <Card style={{ cursor: "pointer",backgroundColor : tema === "light" ? "white" : "black",color : tema === "light" ? "black" : "white" }}>
                                             <h3>Episodio {index + 1} </h3>
                                             <Image preview={false} width={"100%"} height={"100%"} src={item.imagen} />
                                         </Card>

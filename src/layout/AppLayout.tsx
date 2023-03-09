@@ -4,9 +4,10 @@ import { UserOutlined, SearchOutlined, CalendarOutlined, PlayCircleOutlined,Unor
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import type { MenuProps } from 'antd';
 import AppContext from "@/context/context";
+import { ipcRenderer } from "electron";
 const { Header, Content, Footer, Sider } = Layout;
 const AppLayout: React.FC = () => {
-  const { selected, setSelected, setLogin, login,imagen } = useContext(AppContext)
+  const { selected, setSelected, setLogin, login,imagen,tema,setTema } = useContext(AppContext)
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -41,6 +42,15 @@ const AppLayout: React.FC = () => {
       case "5": navigation("/search"); break;
     }
   }, [selected])
+  useEffect(() => {
+    ipcRenderer.on("dark-mode", () => setTema("dark"))
+    ipcRenderer.on("light-mode", () => setTema("light"))
+    console.log(tema)
+    return () => {
+      ipcRenderer.on("dark-mode", () => setTema("dark"))
+      ipcRenderer.on("light-mode", () => setTema("light"))
+    }
+  },[ipcRenderer])
   return (
     <Layout className='container'>
       <Sider
@@ -68,10 +78,10 @@ const AppLayout: React.FC = () => {
           )}
         />
       </Sider>
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer, paddingLeft: "5%" }} >
+      <Layout style={{ backgroundColor: tema === "light" ? "white" :"black"}}>
+        <Header style={{ padding: 0, paddingLeft: "5%" }} >
           <div style={{ width: "80%", float: "left" }}></div>
-          <div style={{ width: "20%", height: "90%", gap: "3%", float: "right", paddingRight: "1%", display: "flex", justifyContent: "end", alignItems: "center" }}>
+          <div style={{ width: "20%", height: "90%", gap: "3%",color: tema === "light" ? "black" : "white", float: "right", paddingRight: "1%", display: "flex", justifyContent: "end", alignItems: "center" }}>
             <h3>{login}</h3>
             <Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
               <a onClick={(e) => e.preventDefault()}>
@@ -81,10 +91,10 @@ const AppLayout: React.FC = () => {
               </a>
             </Dropdown></div>
         </Header>
-        <Content style={{ margin: '24px 16px 0' }}>
+        <Content style={{ margin: '24px 16px 0',backgroundColor: tema === "light" ? "white" :"black" }}>
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: 'center' }}>App ©2023 Created by Misil4</Footer>
+        <Footer style={{ textAlign: 'center', backgroundColor: "#001529",color : "white" }}>App ©2023 Created by Misil4</Footer>
       </Layout>
     </Layout>
   )

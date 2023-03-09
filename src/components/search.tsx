@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import ShowMoreText from "react-show-more-text";
 
 const SearchAnime : React.FC = () => {
-    const {setSelected} = useContext(AppContext)
+    const {setSelected,tema} = useContext(AppContext)
     const navigate = useNavigate()
     const [search,setSearch] = useState<string>("")
     const [loading,setLoading] = useState<boolean>(false)
@@ -20,6 +20,7 @@ const SearchAnime : React.FC = () => {
     const onSearch = (value: string) => { setSearchData(undefined);setLoading(true);setSearch(value)}
 return (<>
     <Search
+    
     placeholder="escribe un anime para buscar"
     allowClear
     enterButton="Buscar"
@@ -29,7 +30,7 @@ return (<>
   {searchData!?.length>1 ? (
     <>
   <p>{searchData?.length} resultados encontrados</p>
-  <Row style={{textAlign : "center",width : "100%", height : "100%", overflowY : "auto"}}>
+  <Row style={{textAlign : "center",width : "100%", height : "100%", overflowY : "auto",color : tema === "light" ? "black" : "white"}}>
     {searchData?.map((item,index) =>{
         return (
             <Col span={8} style={{display : "flex",flexDirection : "column", padding: "2%"}}>
