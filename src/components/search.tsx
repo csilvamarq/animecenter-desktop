@@ -44,7 +44,7 @@ return (<>
     })}
   </Row>
   </>
-  ) : loading && <div style={{ textAlign: "center",cursor : "wait" }}><img src="/loader.gif" /></div>}
+  ) : loading && <div style={{ textAlign: "center",cursor : "wait" }}><img src="https://s10.gifyu.com/images/loader.gif" /></div>}
   </>
 
 )

@@ -1,9 +1,10 @@
 {
-  "name": "electron-vite-react",
-  "version": "2.1.0",
+  "name": "animecenter",
+  "version": "0.1.0",
+  "icon": "./assets/favicon.ico",
   "main": "dist-electron/main/index.js",
   "description": "Electron Vite React boilerplate.",
-  "author": "草鞋没号 <308487730@qq.com>",
+  "author": "misil4",
   "license": "MIT",
   "private": true,
   "debug": {
@@ -13,7 +14,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build && electron-builder",
+    "build": "vite build && electron-builder",
     "preview": "vite preview",
     "e2e": "npx playwright test"
   },
@@ -42,6 +43,7 @@
     "react-notifications": "^1.7.4",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.8.1",
-    "react-show-more-text": "^1.6.2"
+    "react-show-more-text": "^1.6.2",
+    "vite-plugin-import": "^0.4.0"
   }
 }

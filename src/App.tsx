@@ -43,7 +43,7 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AppContext.Provider value={{ selected, setSelected, login, setLogin,setPassword,password,imagen,setImagen,tema,setTema }}>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             {login !== "" || localStorage.getItem("login") ? (
             <Route path='/' element={<AppLayout />}>
@@ -57,7 +57,7 @@ const App: React.FC = () => {
             </Route>) : (<><Route index path='*' element={<Login />} />
               <Route path='/register' element={<Register />} /></>)}
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </AppContext.Provider>
     </QueryClientProvider>
   );

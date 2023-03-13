@@ -37,7 +37,7 @@ const SeasonalAnime: React.FC = () => {
                         })}
                     </Row>
                 </div>
-                : <div style={{ textAlign: "center",cursor : "wait" }}><img src="/loader.gif" /></div>}
+                : <div style={{ textAlign: "center",cursor : "wait" }}><img src="https://s10.gifyu.com/images/loader.gif" /></div>}
         </>
     )
 }

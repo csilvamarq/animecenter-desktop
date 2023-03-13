@@ -123,7 +123,7 @@ const Anime: React.FC = () => {
             ) : <div style={{
                 display: "flex",
                 justifyContent: "center", alignItems: "center", textAlign: "center", cursor: "wait"
-            }}><img src="/loader.gif" /></div>
+            }}><img src="https://s10.gifyu.com/images/loader.gif" /></div>
             }
             <NotificationContainer />
         </>
