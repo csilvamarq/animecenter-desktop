@@ -17,7 +17,7 @@ const AnimePlayer: React.FC = () => {
   console.log(currentEpisode)
   const lastIndex = state.anime.lastIndexOf(`-episodio`)
   const getAnimeUrl = async () => {
-    return axios.get(`${import.meta.env.VITE_API_URL}/dowload/${state.anime.substring(29,lastIndex)}/${currentEpisode}`)
+    return axios.get(`${import.meta.env.VITE_API_URL}/dowload/${state.anime.substring(29, lastIndex)}/${currentEpisode}`)
       .then((response) => shell.openExternal(response.data))
       .catch(error => console.error(error))
 
@@ -28,9 +28,9 @@ const AnimePlayer: React.FC = () => {
       setDowload(false)
     }
   }, [dowload])
-  const {refetch} = useQuery({
+  const { refetch } = useQuery({
     queryKey: ['Episode'], queryFn: async () => {
-      return axios.get(`${import.meta.env.VITE_API_URL}/url/${state.anime.substring(29,lastIndex)}/${currentEpisode}`)
+      return axios.get(`${import.meta.env.VITE_API_URL}/url/${state.anime.substring(29, lastIndex)}/${currentEpisode}`)
         .then(response => { setEpisode(response.data); console.log(response.data) })
         .catch(error => console.error(error))
     }
@@ -39,8 +39,8 @@ const AnimePlayer: React.FC = () => {
     <>
       {episode.length > 1 ? (
         <div style={{ width: "100%", height: "100%", objectFit: "fill", overflow: "auto", color: tema === "light" ? "black" : "white" }}>
-          <div style={{ display: "flex", gap: "2%", alignItems: "center" }}><AiFillLeftCircle color={currentEpisode < 2 ? "grey" : "black"} onClick={() => {currentEpisode > 2 && setCurrentEpisode(currentEpisode - 1);refetch();setEpisode("")}} size={30} /><h1>{state.name} {currentEpisode}</h1><AiFillRightCircle size={30} color={currentEpisode < episode.length ? "black" : "grey"} onClick={() => {currentEpisode < episode.length && setCurrentEpisode(currentEpisode+1);refetch();setEpisode("")}} /> <Button onClick={() => setDowload(true)}>Descargar</Button></div>
-          <iframe width="100%" height="100%" src={episode}>
+          <div style={{ display: "flex", gap: "2%", alignItems: "center" }}><AiFillLeftCircle color={currentEpisode < 2 ? "grey" : "black"} onClick={() => { if (currentEpisode > 1) { setCurrentEpisode(currentEpisode - 1); refetch(); setEpisode("") } }} size={30} /><h1>{state.name} {currentEpisode}</h1><AiFillRightCircle size={30} color={currentEpisode < episode.length ? "black" : "grey"} onClick={() => { if (currentEpisode < episode.length) { setCurrentEpisode(currentEpisode + 1); refetch(); setEpisode("") } }} /> <Button onClick={() => setDowload(true)}>Descargar</Button></div>
+          <iframe loading="lazy" width="100%" height="100%" src={episode}>
 
           </iframe></div>) : <div style={{ textAlign: "center", cursor: "wait" }}><img src="https://s10.gifyu.com/images/loader.gif" /></div>}
     </>

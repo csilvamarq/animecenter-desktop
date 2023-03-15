@@ -63,7 +63,6 @@ async function createWindow() {
   } else {
     win.loadFile(indexHtml)
   }
-  win.webContents.openDevTools()
   let menu = Menu.buildFromTemplate([
     {
       label: "Listas",
