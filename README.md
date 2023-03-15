@@ -1,76 +1,45 @@
-# electron-vite-react
 
-[![awesome-vite](https://awesome.re/mentioned-badge.svg)](https://github.com/vitejs/awesome-vite)
-![GitHub stars](https://img.shields.io/github/stars/caoxiemeihao/vite-react-electron?color=fa6470)
-![GitHub issues](https://img.shields.io/github/issues/caoxiemeihao/vite-react-electron?color=d8b22d)
-![GitHub license](https://img.shields.io/github/license/caoxiemeihao/vite-react-electron)
-[![Required Node.JS >= 14.18.0 || >=16.0.0](https://img.shields.io/static/v1?label=node&message=14.18.0%20||%20%3E=16.0.0&logo=node.js&color=3f893e)](https://nodejs.org/about/releases)
+# Animecenter2 Desktop
 
-English | [简体中文](README.zh-CN.md)
+A Desktop version of android app Animecenter2 with new interface and features
 
-## 👀 Overview
 
-📦 Ready out of the box  
-🎯 Based on the official [template-react-ts](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts), project structure will be familiar to you  
-🌱 Easily extendable and customizable  
-💪 Supports Node.js API in the renderer process  
-🔩 Supports C/C++ native addons  
-🐞 Debugger configuration included  
-🖥 Easy to implement multiple windows  
+## Features
 
-## 🛫 Quick start
+- Light/dark mode toggle
+- Anime database from Monoschinos
+- Customizable anime lists
+- Last added anime Episodes
+- Fast and easy-use interface
 
-```sh
-npm create electron-vite
-```
 
-![electron-vite-react.gif](/public/electron-vite-react.gif)
+## How to install
 
-## 🐞 Debug
+Download last Release from [releases](https://github.com/Misil4/animecenter-desktop/releases)
 
-![electron-vite-react-debug.gif](/public/electron-vite-react-debug.gif)
+Run animecenter2.exe
 
-## 📂 Directory structure
 
-Familiar React application structure, just with `electron` folder on the top :wink:  
-*Files in this folder will be separated from your React application and built into `dist-electron`*  
 
-```tree
-├── electron                                 Electron-related code
-│   ├── main                                 Main-process source code
-│   └── preload                              Preload-scripts source code
-│
-├── release                                  Generated after production build, contains executables
-│   └── {version}
-│       ├── {os}-{os_arch}                   Contains unpacked application executable
-│       └── {app_name}_{version}.{ext}       Installer for the application
-│
-├── public                                   Static assets
-└── src                                      Renderer source code, your React application
-```
 
-## 🚨 Be aware
 
-This template integrates Node.js API to the renderer process by default. If you want to follow **Electron Security Concerns** you might want to disable this feature. You will have to expose needed API by yourself.  
 
-To get started, remove the option as shown below. This will [modify the Vite configuration and disable this feature](https://github.com/electron-vite/vite-plugin-electron-renderer#config-presets-opinionated).
 
-```diff
-# vite.config.ts
+## Roadmap
 
-export default {
-  plugins: [
-    ...
--   // Use Node.js API in the Renderer-process
--   renderer({
--     nodeIntegration: true,
--   }),
-    ...
-  ],
-}
-```
+- Support for linux users
 
-## ❔ FAQ
+- Data link between android and desktop version
 
-- [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)
-- [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
+- New features
+
+
+## Feedback
+
+If you have any feedback, please email me to misil470gamer@gmail.com
+
+
+## Authors
+
+- [@Misil4](https://github.com/Misil4)
+
