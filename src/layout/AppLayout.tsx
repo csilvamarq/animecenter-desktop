@@ -38,8 +38,9 @@ const AppLayout: React.FC = () => {
     switch (selected![0]) {
       case "1": navigation("/usuario"); break;
       case "3": navigation("/seasonalAnime"); break;
-      case "4" : navigation("/lista"); break;
-      case "5": navigation("/search"); break;
+      case "4" : navigation("/animes"); break;
+      case "5" : navigation("/lista"); break;
+      case "6": navigation("/search"); break;
     }
   }, [selected])
   useEffect(() => {
@@ -69,7 +70,7 @@ const AppLayout: React.FC = () => {
           selectedKeys={selected}
           onClick={handleRoutes}
           mode="inline"
-          items={[{ name: "Inicio", icon: UserOutlined }, { name: "Anime", icon: PlayCircleOutlined }, { name: "Temporada", icon: CalendarOutlined },{name : "Lista",icon : UnorderedListOutlined}, { name: "Buscar", icon: SearchOutlined }].map(
+          items={[{ name: "Inicio", icon: UserOutlined }, { name: "Anime", icon: PlayCircleOutlined }, { name: "Episodios Recientes", icon: CalendarOutlined },{ name: "Animes", icon: CalendarOutlined },{name : "Lista",icon : UnorderedListOutlined}, { name: "Buscar", icon: SearchOutlined }].map(
             (item, index) => ({
               key: String(index + 1),
               icon: React.createElement(item.icon),

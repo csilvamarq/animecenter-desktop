@@ -13,6 +13,7 @@ import Login from './auth/login';
 import Register from './auth/register';
 import Settings from './components/settings';
 import ListaAnime from './components/lista';
+import Animes from './components/animes';
 
 
 const App: React.FC = () => {
@@ -50,6 +51,7 @@ const App: React.FC = () => {
               <Route path='usuario' element={<User />} />
               <Route path='seasonalAnime' index element={<SeasonalAnime />} />
               <Route path='anime' element={<Anime />} />
+              <Route path='animes' element={<Animes />} />
               <Route path='ver' element={<AnimePlayer />} />
               <Route path='search' element={<SearchAnime />} />
               <Route path='lista' element={<ListaAnime />} />
