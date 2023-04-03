@@ -99,17 +99,17 @@ const ListaAnime: React.FC = () => {
             <h1 style={{ fontSize: "5vw" }}>Mis listas  {lista ? <Button onClick={showModal}>Nueva Lista</Button> : ""}</h1>
             {lista ? (
                 <Row >
-                    {JSON.parse(lista).map((item: any) => {
-                        return <Col span={24}>
+                    {JSON.parse(lista).map((item: any,index : number) => {
+                        return <Col key={index} span={24}>
                             <h1>{item.name}  <DeleteOutlined onClick={() => {
                                 const newList = JSON.parse(lista).filter((lista: any) => lista.name !== item.name)
                                 localStorage.setItem("listas", JSON.stringify(newList))
                                 setLista(newList.length === 0 ? null : JSON.stringify(newList))
                             }} /></h1>
                             <Row   >
-                                {item.animes.map((anime: any) => {
+                                {item.animes.map((anime: any,index : number) => {
                                     return (
-                                        <Col style={{ display: "flex", flexDirection: "column", padding: "2%",width: "fit-content" }} span={24 / item.animes.length}>
+                                        <Col key={index} style={{ display: "flex", flexDirection: "column", padding: "2%",width: "fit-content" }} span={24 / item.animes.length}>
                                             <Row><Col span={16}><ShowMoreText
                                                 lines={2}
                                                 more="Leer mas"
@@ -174,9 +174,9 @@ const ListaAnime: React.FC = () => {
                     </Form.Item>
                 </Form>
                 <Row>
-                    {animes.map((item) => {
+                    {animes.map((item,index) => {
                         return (
-                            <Col span={8} style={{ padding: "2%" }}>
+                            <Col key={index} span={8} style={{ padding: "2%" }}>
                                 <Card
                                     hoverable
                                     style={{ cursor: "pointer", display: "inline-block" }}

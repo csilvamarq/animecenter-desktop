@@ -10,6 +10,7 @@ info : {
     portada? : string,
     score? : number
 },
+pages : number
 episodes? : EpisodeType[]
 }
 

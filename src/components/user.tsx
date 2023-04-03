@@ -45,9 +45,9 @@ const User: React.FC = () => {
         )}
         <Title style={{ textAlign: "center" }}>ULTIMAS NOTICIAS</Title>
         <Row>
-          {animeNews.map((item) => {
+          {animeNews.map((item,index) => {
             return (
-              <Col
+              <Col key={index}
                 span={12}
                 style={{
                   display: "flex",
@@ -69,9 +69,9 @@ const User: React.FC = () => {
         </Row>
         <Title style={{ textAlign: "center" }}>PROXIMAMENTE</Title>
         <Row>
-          {nextAnimes.map((item) => {
+          {nextAnimes.map((item,index) => {
             return (
-              <Col
+              <Col key={index}
                 span={8}
                 style={{
                   display: "flex",

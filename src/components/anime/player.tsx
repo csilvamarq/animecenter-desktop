@@ -14,7 +14,6 @@ const AnimePlayer: React.FC = () => {
   const [currentEpisode, setCurrentEpisode] = useState<number>(state.episode)
   const { tema } = useContext(AppContext)
   const [episode, setEpisode] = useState<string>("")
-  console.log(currentEpisode)
   const lastIndex = state.anime.lastIndexOf(`-episodio`)
   const getAnimeUrl = async () => {
     return axios.get(`${import.meta.env.VITE_API_URL}/dowload/${state.anime.substring(29, lastIndex)}/${currentEpisode}`)

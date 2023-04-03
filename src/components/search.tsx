@@ -33,7 +33,7 @@ return (<>
   <Row style={{textAlign : "center",width : "100%", height : "80%", overflowY : "auto",color : tema === "light" ? "black" : "white"}}>
     {searchData?.map((item,index) =>{
         return (
-            <Col span={8} style={{display : "flex",flexDirection : "column", padding: "2%"}}>
+            <Col key={index} span={8} style={{display : "flex",flexDirection : "column", padding: "2%"}}>
                 <h1><ShowMoreText  width={200} lines={3}
                                     more="Leer mas" less="Leer menos" expanded={false}>
                                     <p>{item.name}</p>
