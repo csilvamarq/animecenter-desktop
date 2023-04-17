@@ -150,6 +150,7 @@ const Anime: React.FC = () => {
                         name: state.name,
                         anime: item.enlace,
                         episode: (currentPage - 1) * 20 + index + 1,
+                        total : currentPage*20
                       },
                     })
                   }
