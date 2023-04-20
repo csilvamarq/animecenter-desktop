@@ -28,7 +28,6 @@ const Anime: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [minIndex, setMinIndex] = useState<number>(0);
-  const [placeHolder, setPlaceHolder] = useState<string>("Busca una lista");
   const [maxIndex, setMaxIndex] = useState<number>(30);
   const [value, setValue] = useState<number | undefined>(3);
   const [anime, setAnime] = useState<AnimeType>({ info: {}, episodes: [] });
@@ -46,7 +45,7 @@ const Anime: React.FC = () => {
         }/${currentPage}`
       )
       .then(({ data }: { data: AnimeType }) => {
-        console.log(data)
+        console.log(data);
         setValue(data.info.score);
         setAnime(data);
       });
@@ -149,8 +148,11 @@ const Anime: React.FC = () => {
                       state: {
                         name: state.name,
                         anime: item.enlace,
-                        episode: (currentPage - 1) * 20 + index + 1,
-                        total : currentPage*20
+                        episode: (currentPage - 1) * 30 + index + 1,
+                        total:
+                          anime.episodes?.length! > 30
+                            ? currentPage * 30
+                            : anime.episodes?.length,
                       },
                     })
                   }
@@ -165,7 +167,7 @@ const Anime: React.FC = () => {
                       color: tema === "light" ? "black" : "white",
                     }}
                   >
-                    <h3>Episodio {(currentPage - 1) * 20 + index + 1} </h3>
+                    <h3>Episodio {(currentPage - 1) * 30 + index + 1} </h3>
                     <Image
                       preview={false}
                       width={"100%"}
@@ -177,9 +179,13 @@ const Anime: React.FC = () => {
               );
             })}
           </Row>
+          <p>{(anime.pages)}</p>
           <Pagination
             current={currentPage}
-            total={(anime.episodes?.length! * anime.pages === 0 ? 1 : anime.pages)/2}
+            total={
+              (anime.episodes?.length! * anime.pages === 0 ? 1 : anime.pages) /
+              2
+            }
             onChange={handleChange}
           />
           <Modal
