@@ -10,7 +10,7 @@ const Animes = () => {
     queryKey: ["lastSeries"],
     queryFn: async () => {
       const response: any = await axios.get(
-        `${import.meta.env.VITE_API_URL}/lastCurrentSeries`
+        `${import.meta.env.VITE_API_URL}/lastCurrentSeries`,{headers : {"Authorization" : "pc"}}
       );
       console.log(response.data);
       setAnimes(response.data);

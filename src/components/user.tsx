@@ -14,7 +14,7 @@ const User: React.FC = () => {
     queryKey: ["lastAnime"],
     queryFn: async () => {
       return axios
-        .get(`${import.meta.env.VITE_API_URL}/lastAnimeNews`)
+        .get(`${import.meta.env.VITE_API_URL}/lastAnimeNews`,{headers : {"Authorization" : "pc"}})
         .then(({ data }) => setAnimeNews(data));
     },
   });
@@ -68,38 +68,6 @@ const User: React.FC = () => {
           })}
         </Row>
         <Title style={{ textAlign: "center" }}>PROXIMAMENTE</Title>
-        <Row>
-          {nextAnimes.map((item,index) => {
-            return (
-              <Col key={index}
-                span={8}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  padding: "2%",
-                }}
-              >
-                <h3>{item.name}</h3>
-                <Image
-                  preview={false}
-                  src={item.image}
-                  width={"100%"}
-                  height={"100%"}
-                />
-                <div style={{ width: "100%" }}>
-                  <div style={{ display: "flex", fontWeight: "bold" }}>
-                    <p style={{ width: "60%" }}>Tipo</p>
-                    <p style={{ width: "40%" }}>Estado</p>
-                  </div>
-                  <div style={{ display: "flex" }}>
-                    <p style={{ width: "60%" }}>{item.type}</p>
-                    <p style={{ width: "40%" }}>{item.estado}</p>
-                  </div>
-                </div>
-              </Col>
-            );
-          })}
-        </Row>
       </Col>
     </Row>
   );

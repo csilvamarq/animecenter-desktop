@@ -16,7 +16,7 @@ const SeasonalAnime: React.FC = () => {
     const [seasonalAnime, setSeasonalAnime] = useState<any[]>([])
     useQuery({
         queryKey: ['lastAnime'], queryFn: async () => {
-            return axios.get(`${import.meta.env.VITE_API_URL}/lastAnime`).then(({ data }) => setSeasonalAnime(data))
+            return axios.get(`${import.meta.env.VITE_API_URL}/lastAnime`,{headers : {"Authorization" : "pc"}}).then(({ data }) => setSeasonalAnime(data))
         }
     })
     return (

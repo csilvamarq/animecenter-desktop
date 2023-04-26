@@ -9,7 +9,7 @@ import AppContext from '@/context/context';
 const Login = () => {
  const {setLogin,setPassword,setImagen} = useContext(AppContext)
   const onFinish = (values: any) => {
-    axios.post(`${import.meta.env.VITE_API_URL}/login`,{name : values.usuario,password : values.contraseña}).then(({data} : {data : any}) =>{
+    axios.post(`${import.meta.env.VITE_API_URL}/login`,{name : values.usuario,password : values.contraseña},{headers : {"Authorization" : "pc"}}).then(({data} : {data : any}) =>{
        if (data.data.length>0) { 
         if (values.recordar) {
           console.log(data.data[0])

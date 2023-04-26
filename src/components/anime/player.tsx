@@ -39,7 +39,7 @@ const AnimePlayer: React.FC = () => {
         `${import.meta.env.VITE_API_URL}/url/${state.anime.substring(
           29,
           lastIndex
-        )}/${currentEpisode}`
+        )}/${currentEpisode}`,{headers : {"Authorization" : "pc"}}
       )
       .then(({ data }) => {
         setEpisode(data[option]);

@@ -15,7 +15,7 @@ const Settings: React.FC = () => {
         // data for submit
         console.log(imageList, addUpdateIndex);
         setImages(imageList as never[]);
-        axios.post(`${import.meta.env.VITE_API_URL}/avatar`,{name : login,password : password,image : Buffer.from(imageList[0].dataURL!).toString("base64")}).then(({data}) => console.log(data))
+        axios.post(`${import.meta.env.VITE_API_URL}/avatar`,{name : login,password : password,image : Buffer.from(imageList[0].dataURL!).toString("base64")},{headers : {"Authorization" : "pc"}}).then(({data}) => console.log(data))
     };
     return (
         <Row>

@@ -80,7 +80,7 @@ const ListaAnime: React.FC = () => {
         setSearchLoad(true);
         if (value.keyCode === 13) {
             axios
-                .get(`${import.meta.env.VITE_API_URL}/search/${value.target.value}`)
+                .get(`${import.meta.env.VITE_API_URL}/search/${value.target.value}`,{headers : {"Authorization" : "pc"}})
                 .then(({ data }: { data: SearchType[] }) => {
                     let arr: any[] = [];
                     data.map((item) =>

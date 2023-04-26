@@ -14,7 +14,7 @@ const SearchAnime : React.FC = () => {
     const [loading,setLoading] = useState<boolean>(false)
     const [searchData,setSearchData] = useState<SearchType[]>()
         useEffect(() => {
-            axios.get(`${import.meta.env.VITE_API_URL}/search/${search}`).then(({ data } : {data : SearchType[]}) => {setSearchData(data);setLoading(false)})
+            axios.get(`${import.meta.env.VITE_API_URL}/search/${search}`,{headers : {"Authorization" : "pc"}}).then(({ data } : {data : SearchType[]}) => {setSearchData(data);setLoading(false)})
         },[search])
         
     const onSearch = (value: string) => { setSearchData(undefined);setLoading(true);setSearch(value)}
