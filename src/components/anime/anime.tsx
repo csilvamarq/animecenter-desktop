@@ -20,9 +20,12 @@ import {
   NotificationContainer,
 } from "react-notifications";
 import AppContext from "@/context/context";
+import { useMediaQuery } from "react-responsive";
 
 const Anime: React.FC = () => {
   const { tema } = useContext(AppContext);
+  const smallSize = useMediaQuery({maxWidth: 768})
+  const spanValue = smallSize ? 24 : 12; // Cambia el valor de span en base al tamaño de la pantalla
   const { state } = useLocation();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -42,11 +45,11 @@ const Anime: React.FC = () => {
           state?.enlace !== undefined
             ? state.enlace.substring(31, lastIndex)
             : state.url.substring(29, lastIndex)
-        }/${currentPage}`
+        }/${currentPage}`,{headers : {"Authorization" : "pc"}}
       )
       .then(({ data }: { data: AnimeType }) => {
         console.log(data);
-        setValue(data.info.score);
+        setValue(data.info?.score || 0);
         setAnime(data);
       });
   }, [currentPage]);
@@ -157,7 +160,7 @@ const Anime: React.FC = () => {
                     })
                   }
                   key={index}
-                  span={12}
+                  span={spanValue}
                   style={{ padding: "1%" }}
                 >
                   <Card

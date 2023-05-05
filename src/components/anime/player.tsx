@@ -22,7 +22,7 @@ const AnimePlayer: React.FC = () => {
         `${import.meta.env.VITE_API_URL}/dowload/${state.anime.substring(
           29,
           lastIndex
-        )}/${currentEpisode}`
+        )}/${currentEpisode}`,{headers : {"Authorization" : "pc"}}
       )
       .then((response) => shell.openExternal(response.data))
       .catch((error) => console.error(error));
@@ -34,6 +34,7 @@ const AnimePlayer: React.FC = () => {
     }
   }, [dowload]);
   useEffect(() => {
+    console.log(1)
     axios
       .get(
         `${import.meta.env.VITE_API_URL}/url/${state.anime.substring(
@@ -100,7 +101,7 @@ const AnimePlayer: React.FC = () => {
             loading="lazy"
             width="100%"
             height="100%"
-            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
             allowFullScreen
             allow="encrypted-media"
             src={episode}

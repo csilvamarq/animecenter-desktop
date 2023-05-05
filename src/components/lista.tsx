@@ -18,8 +18,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowMoreText from "react-show-more-text";
 import { NotificationManager,NotificationContainer } from "react-notifications";
+import { useMediaQuery } from "react-responsive";
 
 const ListaAnime: React.FC = () => {
+    const isSmallScreen = useMediaQuery({ maxWidth: 768 });
+    const spanValue = isSmallScreen ? 24 : 8; // Cambia el valor de span en base al tamaño de la pantalla
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [lista, setLista] = useState(localStorage.getItem("listas"))
     const [hover, setHover] = useState(false);
@@ -176,7 +179,7 @@ const ListaAnime: React.FC = () => {
                 <Row>
                     {animes.map((item,index) => {
                         return (
-                            <Col key={index} span={8} style={{ padding: "2%" }}>
+                            <Col key={index} span={spanValue} style={{ padding: "2%" }}>
                                 <Card
                                     hoverable
                                     style={{ cursor: "pointer", display: "inline-block" }}

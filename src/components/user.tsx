@@ -5,16 +5,21 @@ import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { shell } from "electron";
+import { useMediaQuery } from "react-responsive";
 const { Title } = Typography;
 const User: React.FC = () => {
   const { login, imagen, tema } = useContext(AppContext);
+  const smallSize = useMediaQuery({ maxWidth: 768 });
+  const spanValue = smallSize ? 24 : 12; // Cambia el valor de span en base al tamaño de la pantalla
   const [animeNews, setAnimeNews] = useState<any[]>([]);
   const [nextAnimes, setNextAnimes] = useState<any[]>([]);
   useQuery({
     queryKey: ["lastAnime"],
     queryFn: async () => {
       return axios
-        .get(`${import.meta.env.VITE_API_URL}/lastAnimeNews`,{headers : {"Authorization" : "pc"}})
+        .get(`${import.meta.env.VITE_API_URL}/lastAnimeNews`, {
+          headers: { Authorization: "pc" },
+        })
         .then(({ data }) => setAnimeNews(data));
     },
   });
@@ -22,10 +27,13 @@ const User: React.FC = () => {
     queryKey: ["nextAnime"],
     queryFn: async () => {
       return axios
-        .get(`${import.meta.env.VITE_API_URL}/lastAnimeSeries`)
+        .get(`${import.meta.env.VITE_API_URL}/lastAnimeSeries`, {
+          headers: { Authorization: "pc" },
+        })
         .then(({ data }) => setNextAnimes(data));
     },
   });
+  console.log(nextAnimes);
   return (
     <Row style={{ padding: "2%", height: "100%", overflowY: "auto" }}>
       <Col>
@@ -45,10 +53,11 @@ const User: React.FC = () => {
         )}
         <Title style={{ textAlign: "center" }}>ULTIMAS NOTICIAS</Title>
         <Row>
-          {animeNews.map((item,index) => {
+          {animeNews.map((item, index) => {
             return (
-              <Col key={index}
-                span={12}
+              <Col
+                key={index}
+                span={spanValue}
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -67,7 +76,34 @@ const User: React.FC = () => {
             );
           })}
         </Row>
-        <Title style={{ textAlign: "center" }}>PROXIMAMENTE</Title>
+        {nextAnimes.length > 0 && (
+          <>
+            <Title style={{ textAlign: "center" }}>PROXIMAMENTE</Title>
+            <Row>
+              {nextAnimes.map((item, index) => {
+                return (
+                  <Col
+                    key={index}
+                    span={spanValue}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      padding: "2%",
+                    }}
+                  >
+                    <h3>{item.title}</h3>
+                    <Image
+                      preview={false}
+                      src={item.image}
+                      width={"100%"}
+                      height={"100%"}
+                    />
+                  </Col>
+                );
+              })}
+            </Row>
+          </>
+        ) }
       </Col>
     </Row>
   );

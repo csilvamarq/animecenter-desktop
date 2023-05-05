@@ -27,7 +27,8 @@ const Animes = () => {
               key={index}
               style={{
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
+                resize : "both",
                 padding: "2%",
               }}
             >
